@@ -197,6 +197,18 @@ wipe_calico() {
     ip link del tunl0 2>/dev/null; ip link del vxlan.calico 2>/dev/null
     for i in $(ip -o link | awk -F": " "/cali/{print \$2}" | cut -d@ -f1); do ip link del "$i" 2>/dev/null; done; true'
 }
+# Remove an existing Cilium (the Killercoda playground may ship with one) and leave the nodes with no CNI.
+wipe_cilium() {
+  log "Removing the existing Cilium (simulating a cluster with no CNI)"
+  cilium uninstall --wait >/dev/null 2>&1 || helm -n kube-system uninstall cilium >/dev/null 2>&1 || true
+  kubectl -n kube-system delete ds cilium cilium-envoy --ignore-not-found >/dev/null 2>&1 || true
+  kubectl -n kube-system delete deploy cilium-operator hubble-relay hubble-ui --ignore-not-found >/dev/null 2>&1 || true
+  kubectl -n kube-system delete ds kube-proxy --ignore-not-found >/dev/null 2>&1 || true
+  kubectl -n kube-system delete cm kube-proxy --ignore-not-found >/dev/null 2>&1 || true
+  on_all_nodes 'rm -f /etc/cni/net.d/*cilium* /etc/cni/net.d/*.cilium_bak
+    for i in cilium_host cilium_net cilium_vxlan cilium_wg0; do ip link del "$i" 2>/dev/null; done
+    iptables -F; iptables -t nat -F; iptables -t mangle -F; iptables -X; iptables -t nat -X; iptables -t mangle -X; true'
+}
 cilium_baseline_install() {
   ensure_cilium_cli
   cilium install --version "$CILIUM_VERSION" \

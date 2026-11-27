@@ -5,10 +5,10 @@
 ## Context
 
 This is a freshly built cluster with **no CNI and no kube-proxy** (`setup.sh` removed
-Calico and kube-proxy). Nodes are `NotReady` and CoreDNS cannot start.
+the existing CNI and kube-proxy). Nodes are `NotReady` and CoreDNS cannot start.
 
 > ⚠ This changes cluster-wide networking and cannot be undone. **Restart the
-> Killercoda playground** afterwards if you want Calico back (needed for the Istio
+> Killercoda playground** afterwards to get the original CNI back (needed for the Istio
 > scenarios 21, 29, 30).
 
 ## Task

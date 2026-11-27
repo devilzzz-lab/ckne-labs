@@ -33,8 +33,8 @@ So the labs are split. Switching sessions = **restart the Killercoda playground*
 
 | Session | CNI | How to get it | Labs |
 |---------|-----|---------------|------|
-| **A** | Calico (the default playground) | nothing to do | every lab tagged `[A or B]` or `[A: Calico, Istio]` |
-| **B** | Cilium | do **lab 01** (you install it) or run `./cluster/install-cilium.sh` | every lab tagged `[B: Cilium]` and all `[A or B]` |
+| **A** | not Cilium-with-BPF-masquerade (a Calico playground, or Cilium with it off) | nothing to do | every lab tagged `[A or B]` or `[A: Calico, Istio]` |
+| **B** | Cilium with KPR + BPF masquerade | do **lab 01** (it removes any existing CNI first, you install Cilium) or run `./cluster/install-cilium.sh` | every lab tagged `[B: Cilium]` and all `[A or B]` |
 
 Each setup script checks this and stops with a clear message if the session is wrong.
 Suggested order: do **A** first, restart, then **B**.

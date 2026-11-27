@@ -5,15 +5,15 @@ set -euo pipefail
 source "$(dirname "${BASH_SOURCE[0]}")/../lib/common.sh"
 need_cluster
 
-if [ "$(cni_kind)" = cilium ]; then
-  log "Cilium is already installed."; exit 0
+if [ "$(cni_kind)" = cilium ] && [ "$(cilium_cfg kube-proxy-replacement)" = true ] && [ "$(cilium_cfg enable-bpf-masquerade)" = true ]; then
+  log "Cilium is already installed with kube-proxy replacement and BPF masquerading. Nothing to do."; exit 0
 fi
-echo "This replaces the cluster CNI (Calico → Cilium) and removes kube-proxy."
+echo "This replaces the cluster CNI with the Cilium baseline (KPR + BPF masquerade) and removes kube-proxy."
 echo "Use a throwaway playground. Restart the playground to get Calico back."
 read -r -p "Continue? [y/N] " a; [ "${a:-n}" = y ] || exit 0
 
 ensure_cilium_cli
-wipe_calico
+if [ "$(cni_kind)" = cilium ]; then wipe_cilium; else wipe_calico; fi
 sleep 5
 cilium_baseline_install
 kubectl get nodes

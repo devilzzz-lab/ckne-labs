@@ -4,13 +4,14 @@ source "$(dirname "${BASH_SOURCE[0]}")/../lib/common.sh"
 need_cluster
 
 echo "=== Setting up Scenario 01: Install Cilium as a kube-proxy replacement ==="
-if [ "$(cni_kind)" = cilium ]; then
-  warn "Cilium is already installed. This scenario cannot be repeated on this cluster."
-  warn "Restart the Killercoda playground to practise it again."
-  exit 0
-fi
 ensure_cilium_cli
-wipe_calico
+if [ "$(cni_kind)" = cilium ]; then
+  warn "The playground already runs Cilium. Removing it so you can install it yourself."
+  warn "Current config: kube-proxy-replacement=$(cilium_cfg kube-proxy-replacement) bpf-masquerade=$(cilium_cfg enable-bpf-masquerade)"
+  wipe_cilium
+else
+  wipe_calico
+fi
 log "Waiting for nodes to go NotReady (no CNI config left)..."
 sleep 15
 kubectl get nodes || true
