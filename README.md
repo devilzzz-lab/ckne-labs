@@ -17,12 +17,8 @@ and `solution.md`, driven by an interactive runner.
 
 ```bash
 # 1. Open a Killercoda Kubernetes playground (2 nodes), on the controlplane:
-git clone <this-repo> && cd ckne-labs
-
-# 2. One-time check (cluster, ssh node01, which CNI you have):
+git clone https://github.com/devilzzz-lab/ckne-labs && cd ckne-labs
 ./cluster/create-cluster.sh
-
-# 3. Study:
 ./ckne.sh
 ```
 
