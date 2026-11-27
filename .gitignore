@@ -1,0 +1,19 @@
+# Third-party source material (copyrighted blog posts), local only
+reference/
+
+# Progress tracking (local state)
+.ckne-progress
+
+# Scenario scratch files
+ckne-work/
+tls.crt
+tls.key
+*.pcap
+*.tar
+*.tmp
+*.bak
+
+# Editor / OS
+.idea/
+.vscode/
+.DS_Store
