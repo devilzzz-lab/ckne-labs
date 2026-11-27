@@ -23,7 +23,7 @@ kubectl replace --force -f pod.yaml           # immutable fields: delete + recre
 ```bash
 cilium status --wait
 cilium config view | grep -i <key>
-cilium upgrade --reuse-values --set <key>=<value>
+cilium upgrade --version <running-version> --reuse-values --set <key>=<value>   # pin the version, see `cilium version`
 kubectl -n kube-system rollout restart ds/cilium deploy/cilium-operator       # after EVERY config change
 kubectl -n kube-system exec ds/cilium -- cilium-dbg status --verbose
 kubectl -n kube-system exec ds/cilium -- cilium-dbg service list

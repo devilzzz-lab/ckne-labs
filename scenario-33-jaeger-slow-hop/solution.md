@@ -17,12 +17,12 @@ kubectl -n tracing port-forward svc/jaeger 16686:16686 &
 
    | Span | Duration | Own time (duration − child) |
    |------|----------|------------------------------|
-   | frontend | 1000 ms | 10 ms |
-   | cart | 990 ms | 15 ms |
-   | pricing | 975 ms | **~800 ms** ← the slow one |
-   | inventory | 175 ms | 175 ms |
+   | frontend | 860 ms | 10 ms (860 − 850) |
+   | cart | 850 ms | 15 ms (850 − 835) |
+   | pricing | 835 ms | **820 ms** (835 − 15) ← the slow one |
+   | inventory | 15 ms | 15 ms (no child) |
 
-   (Illustrative numbers.) The service with a large own time is the slow hop. Confirm it
+   (Illustrative numbers.) The service with a large **own time** is the slow hop. A long **duration** alone proves nothing, because every parent includes its children. If the slow service is the last one (`inventory`), its span is long and has no child. Confirm it
    with a short trace, where the same span is small. The Jaeger **compare** view or
    **Trace statistics** (self time per service) shows the same thing.
 

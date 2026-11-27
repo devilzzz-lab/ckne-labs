@@ -1,6 +1,6 @@
 # Scenario 22 – NetworkPolicy: default deny + allow-list
 
-**Domain 4 – Network Security and Policy** · Session: A or B · Time: ~12 min
+**Domain 4 – Network Security and Policy** · Session: Any playground · Time: ~12 min
 
 ## Context
 

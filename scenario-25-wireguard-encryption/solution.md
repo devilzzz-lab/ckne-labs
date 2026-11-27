@@ -1,7 +1,9 @@
 # Solution – Scenario 25: WireGuard pod + node encryption
 
 ```bash
-cilium upgrade --reuse-values \
+# keep the running version: `cilium upgrade` without --version moves to the CLI's default version
+CV=$(kubectl -n kube-system get ds cilium -o jsonpath='{.spec.template.spec.containers[0].image}' | sed -E 's/.*:v?([0-9]+\.[0-9]+\.[0-9]+).*/\1/')
+cilium upgrade --version $CV --reuse-values \
   --set encryption.enabled=true \
   --set encryption.type=wireguard \
   --set encryption.nodeEncryption=true

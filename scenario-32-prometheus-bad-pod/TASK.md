@@ -1,6 +1,6 @@
 # Scenario 32 – Prometheus: find the failing backend Pod
 
-**Domain 5 – Observability** · Session: A or B · Time: ~10 min
+**Domain 5 – Observability** · Session: Any playground · Time: ~10 min
 
 ## Context
 

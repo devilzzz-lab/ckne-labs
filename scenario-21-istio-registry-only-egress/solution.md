@@ -39,8 +39,9 @@ kubectl -n egress-lab exec curl-client -c curl -- curl -s -o /dev/null -w '%{htt
 - A **ServiceEntry** adds an external host to Istio's service registry, so it becomes
   routable and can carry traffic policy, retries, timeouts and telemetry.
 - The same setting can be set mesh-wide with `meshConfig.outboundTrafficPolicy.mode`.
-- This is sidecar-mode behaviour. In **ambient** mode ztunnel does not enforce
-  `REGISTRY_ONLY`, and egress control uses waypoints / egress gateways instead.
+- This lab uses **sidecar mode** (the namespace has `istio-injection=enabled`), where the sidecar
+  enforces `REGISTRY_ONLY`. In **ambient** mode the design is different: external hosts are
+  controlled with ServiceEntries plus a waypoint or egress gateway. See the Istio egress docs.
 - **Egress gateway** (the next step in a real design): a dedicated Envoy at the mesh edge.
   Sidecars send external traffic to it (`Gateway` + `VirtualService` + `DestinationRule`),
   and only the gateway Pods are allowed out by a NetworkPolicy. That gives one audited exit

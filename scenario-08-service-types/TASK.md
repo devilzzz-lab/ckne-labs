@@ -1,6 +1,6 @@
 # Scenario 08 – ClusterIP, NodePort, Headless and ExternalName Services
 
-**Domain 2 – Service Networking and DNS** · Session: A or B · Time: ~8 min
+**Domain 2 – Service Networking and DNS** · Session: Any playground · Time: ~8 min
 
 ## Context
 
@@ -24,7 +24,7 @@ Create these four Services in namespace `svc-lab`. Use exactly these names and v
 kubectl -n svc-lab get svc
 kubectl -n svc-lab exec toolbox -- curl -s -m3 http://web-clusterip:8080 | head -3
 kubectl -n svc-lab exec toolbox -- nslookup web-headless          # 2 Pod IPs
-curl -s -m3 http://$(kubectl get node node01 -o jsonpath='{.status.addresses[0].address}'):30088 | head -3
+curl -s -m3 http://$(kubectl get node node01 -o jsonpath='{.status.addresses[?(@.type=="InternalIP")].address}'):30088 | head -3
 kubectl -n svc-lab exec toolbox -- nslookup docs
 ```
 

@@ -1,6 +1,6 @@
 # Scenario 15 – Gateway API path routing
 
-**Domain 2 – Service Networking and DNS** · Session: A or B · Time: ~10 min
+**Domain 2 – Service Networking and DNS** · Session: Any playground · Time: ~10 min
 
 ## Context
 
@@ -23,6 +23,10 @@ In namespace `web`:
    `shop.example.com`:
    - requests with path prefix **`/api`** → Service `api`, port 8080
    - **all other** requests → Service `frontend`, port 80
+
+The checker also sends `/api/v1/users` (must reach `api`, because it is under `/api`), `/other`
+(must reach `frontend`), and a request with an unknown hostname such as `other.example.com`
+(must get **404**, because the listener only accepts `shop.example.com`).
 
 ## Test AFTER fix
 

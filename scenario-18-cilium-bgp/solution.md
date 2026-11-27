@@ -3,7 +3,9 @@
 ## Step 1 – Enable the control plane
 
 ```bash
-cilium upgrade --reuse-values --set bgpControlPlane.enabled=true
+# keep the running version: `cilium upgrade` without --version moves to the CLI's default version
+CV=$(kubectl -n kube-system get ds cilium -o jsonpath='{.spec.template.spec.containers[0].image}' | sed -E 's/.*:v?([0-9]+\.[0-9]+\.[0-9]+).*/\1/')
+cilium upgrade --version $CV --reuse-values --set bgpControlPlane.enabled=true
 kubectl -n kube-system rollout restart ds/cilium deploy/cilium-operator
 kubectl -n kube-system rollout status ds/cilium
 kubectl api-resources | grep -i ciliumbgp          # CRDs now exist

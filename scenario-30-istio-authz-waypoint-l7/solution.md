@@ -53,7 +53,7 @@ EOF
 kubectl -n bank exec teller  -- curl -s -o /dev/null -w '%{http_code}\n' -X POST http://ledger/transfer    # 200
 kubectl -n bank exec teller  -- curl -s -o /dev/null -w '%{http_code}\n' http://ledger/transfer            # 403
 kubectl -n bank exec auditor -- curl -s -o /dev/null -w '%{http_code}\n' -X POST http://ledger/transfer    # 403 (RBAC: access denied)
-kubectl -n bank logs deploy/waypoint | tail
+kubectl -n bank logs deploy/waypoint | tail      # may be empty: access logs are off unless enabled with the Telemetry API
 ```
 
 ## Why

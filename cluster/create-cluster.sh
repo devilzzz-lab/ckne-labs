@@ -16,8 +16,14 @@ command -v helm >/dev/null && log "helm present" || warn "helm missing (it is in
 
 echo
 case "$(cni_kind)" in
-  cilium) log "CNI: Cilium (session B). bpf.masquerade=$(cilium_cfg enable-bpf-masquerade). Istio ambient scenarios (21, 29, 30) will refuse to run." ;;
-  calico) log "CNI: Calico (session A). Cilium scenarios (01, 02, 18, 19, 23, 24, 25, 31) need session B." ;;
+  cilium)
+    if [ "$(cilium_cfg kube-proxy-replacement)" = true ] && [ "$(cilium_cfg enable-bpf-masquerade)" = true ]; then
+      log "CNI: Cilium with KPR + BPF masquerade. Cilium labs are ready. Istio labs (21, 29, 30) need a fresh playground."
+    else
+      log "CNI: Cilium (kube-proxy-replacement=$(cilium_cfg kube-proxy-replacement), bpf-masquerade=$(cilium_cfg enable-bpf-masquerade))."
+      log "Istio labs (21, 29, 30) run here (they adjust Cilium for you). Cilium labs need lab 01 first."
+    fi ;;
+  calico) log "CNI: Calico. Istio labs run here. Cilium labs need lab 01 first (it replaces the CNI)." ;;
   *)      warn "No known CNI detected." ;;
 esac
 
@@ -28,7 +34,8 @@ cat <<EOF
 ═══════════════════════════════════════════════════
   Cluster ready. Run ./ckne.sh to start studying
 ═══════════════════════════════════════════════════
-  Session A = default Killercoda playground (Calico)
-  Session B = Cilium (do scenario 01, or ./cluster/install-cilium.sh)
-  Switching between A and B = restart the Killercoda playground.
+  [any playground]    works on a fresh playground
+  [Cilium playground] needs Cilium with KPR + BPF masquerade: do lab 01 (or ./cluster/install-cilium.sh)
+  [Istio playground]  needs NO Cilium BPF masquerade: use a fresh playground
+  After lab 01, restart the playground before the Istio labs.
 EOF

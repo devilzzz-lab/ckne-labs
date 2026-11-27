@@ -1,6 +1,6 @@
 # Scenario 07 – Multi-interface Pod with Multus
 
-**Domain 1 – Core Infrastructure and CNI** · Session: A or B · Time: ~10 min
+**Domain 1 – Core Infrastructure and CNI** · Session: Any playground · Time: ~10 min
 
 ## Context
 

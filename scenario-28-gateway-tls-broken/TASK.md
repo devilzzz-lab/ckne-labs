@@ -1,6 +1,6 @@
 # Scenario 28 – Gateway TLS: fix a broken setup
 
-**Domain 4 – Network Security and Policy** · Session: A or B · Time: ~12 min
+**Domain 4 – Network Security and Policy** · Session: Any playground · Time: ~12 min
 
 ## Context
 

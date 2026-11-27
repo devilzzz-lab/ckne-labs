@@ -1,6 +1,6 @@
 # Scenario 24 – Cilium FQDN egress policy
 
-**Domain 4 – Network Security and Policy** · Session: **B (Cilium)** · Time: ~10 min
+**Domain 4 – Network Security and Policy** · Session: **Cilium playground** (do lab 01 first) · Time: ~10 min
 
 ## Context
 
@@ -30,7 +30,7 @@ Result: `https://example.com` → **200**, `https://www.wikipedia.org` → **blo
 
 ```bash
 kubectl -n fqdn exec client -- curl -s -o /dev/null -w '%{http_code}\n' -m6 https://example.com
-kubectl -n fqdn exec client -- curl -s -o /dev/null -w '%{http_code}\n' -m6 https://www.wikipedia.org     # 000
+kubectl -n fqdn exec client -- curl -s -o /dev/null -w '%{http_code}\n' -m6 https://www.wikipedia.org     # 000 (any failure, no 200)
 hubble observe -n fqdn --verdict DROPPED       # (if Hubble is enabled)
 ```
 

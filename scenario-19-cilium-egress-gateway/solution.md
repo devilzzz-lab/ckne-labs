@@ -4,7 +4,9 @@
 
 ```bash
 cilium config view | grep -E 'bpf-masquerade|kube-proxy-replacement'     # both must be on
-cilium upgrade --reuse-values --set egressGateway.enabled=true
+# keep the running version: `cilium upgrade` without --version moves to the CLI's default version
+CV=$(kubectl -n kube-system get ds cilium -o jsonpath='{.spec.template.spec.containers[0].image}' | sed -E 's/.*:v?([0-9]+\.[0-9]+\.[0-9]+).*/\1/')
+cilium upgrade --version $CV --reuse-values --set egressGateway.enabled=true
 kubectl -n kube-system rollout restart ds/cilium deploy/cilium-operator
 kubectl -n kube-system rollout status ds/cilium
 ```
@@ -41,7 +43,7 @@ EOF
 ```bash
 # on the agent that runs the billing-client Pod (it is on the controlplane node)
 POD=$(kubectl -n kube-system get pod -l k8s-app=cilium --field-selector spec.nodeName=controlplane -o name)
-kubectl -n kube-system exec $POD -- cilium-dbg bpf egress list
+kubectl -n kube-system exec $POD -c cilium-agent -- cilium-dbg bpf egress list
 #   Source IP    Destination CIDR    Egress IP      Gateway IP
 #   10.0.0.23    203.0.113.0/24      <node01 IP>    <node01 IP>
 ```

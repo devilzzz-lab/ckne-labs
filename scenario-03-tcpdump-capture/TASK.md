@@ -1,6 +1,6 @@
 # Scenario 03 – Capture packets with tcpdump
 
-**Domain 1 – Core Infrastructure and CNI** · Session: A or B · Time: ~5 min
+**Domain 1 – Core Infrastructure and CNI** · Session: Any playground · Time: ~5 min
 
 ## Context
 

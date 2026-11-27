@@ -1,6 +1,6 @@
 # Scenario 31 – Hubble: find the dropped workload
 
-**Domain 5 – Observability** · Session: **B (Cilium)** · Time: ~10 min
+**Domain 5 – Observability** · Session: **Cilium playground** (do lab 01 first) · Time: ~10 min
 
 ## Context
 

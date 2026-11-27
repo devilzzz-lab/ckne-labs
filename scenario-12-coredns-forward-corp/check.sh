@@ -4,8 +4,8 @@ check_header "Scenario 12: CoreDNS forward a corporate domain"
 CIP=$(kubectl -n dns-lab get svc corp-dns -o jsonpath='{.spec.clusterIP}')
 COREFILE() { kubectl -n kube-system get cm coredns -o jsonpath='{.data.Corefile}'; }
 
-block_ok()    { COREFILE | grep -Eq '^corp\.internal(:53)?[[:space:]]*\{'; }
-fwd_ok()      { COREFILE | awk '/^corp\.internal/{f=1} f&&/forward/{print; exit}' | grep -q "forward \. $CIP"; }
+block_ok()    { COREFILE | grep -Eq '^[[:space:]]*corp\.internal\.?(:53)?[[:space:]]*\{'; }
+fwd_ok()      { COREFILE | awk '/^[[:space:]]*corp\.internal/{f=1} f&&/forward/{print; exit}' | grep -Eq "forward[[:space:]]+\.[[:space:]]+${CIP//./\\.}([[:space:]]|\$)"; }
 default_ok()  { COREFILE | grep -Eq '^\.:53[[:space:]]*\{' && COREFILE | grep -q 'kubernetes cluster.local'; }
 corp_works()  { retry 20 6 bash -c "kubectl -n dns-lab exec toolbox -- nslookup app.corp.internal 2>/dev/null | grep -q 10.20.30.40"; }
 cluster_ok()  { tbx dns-lab toolbox nslookup kubernetes.default.svc.cluster.local | grep -q 'Address'; }

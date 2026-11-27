@@ -1,6 +1,6 @@
 # Scenario 23 – Cilium L7 HTTP policy
 
-**Domain 4 – Network Security and Policy** · Session: **B (Cilium)** · Time: ~10 min
+**Domain 4 – Network Security and Policy** · Session: **Cilium playground** (do lab 01 first) · Time: ~10 min
 
 ## Context
 
@@ -16,7 +16,7 @@ Pods `app=api` and, for ingress from Pods `app=frontend` on **TCP 8080**, allows
 - **`GET`** on **`/products`** and on anything below it (`/products/42`, ...)
 
 Every other request from `frontend` (other paths, other methods) must be rejected with
-**HTTP 403**.
+**HTTP 403**. That includes look-alike paths such as `/productsx`, so make the path rule exact.
 
 ## Test AFTER fix
 

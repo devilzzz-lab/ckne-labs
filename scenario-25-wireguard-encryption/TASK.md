@@ -1,6 +1,6 @@
 # Scenario 25 – WireGuard pod + node encryption
 
-**Domain 4 – Network Security and Policy** · Session: **B (Cilium)** · Time: ~10 min
+**Domain 4 – Network Security and Policy** · Session: **Cilium playground** (do lab 01 first) · Time: ~10 min
 
 ## Context
 
@@ -30,7 +30,7 @@ tcpdump -i any -nn -c 5 udp port 51871
 
 ## Hints
 
-- `cilium upgrade --reuse-values --set ...`, then `kubectl -n kube-system rollout restart ds/cilium`.
+- `cilium upgrade --version <running version> --reuse-values --set ...` (keep the version), then `kubectl -n kube-system rollout restart ds/cilium`.
 - In `cilium-dbg status`, the line is `Encryption: Wireguard [... Peers: N]`.
 - N should equal (number of nodes − 1).
 - Docs: <https://docs.cilium.io/en/stable/security/network/encryption-wireguard/>

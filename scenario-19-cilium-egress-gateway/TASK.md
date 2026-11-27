@@ -1,6 +1,6 @@
 # Scenario 19 – Cilium Egress Gateway
 
-**Domain 3 – Advanced Traffic Management** · Session: **B (Cilium)** · Time: ~12 min
+**Domain 3 – Advanced Traffic Management** · Session: **Cilium playground** (do lab 01 first) · Time: ~12 min
 
 ## Context
 
@@ -29,7 +29,9 @@ The Cilium baseline already has `kubeProxyReplacement=true` and `bpf.masquerade=
 
 ```bash
 kubectl get ciliumegressgatewaypolicy billing-egress -o yaml
-kubectl -n kube-system exec ds/cilium -- cilium-dbg bpf egress list     # run it on the agent of the Pod's node
+# the checker reads the map on the agent of the controlplane node (where billing-client runs):
+POD=$(kubectl -n kube-system get pod -l k8s-app=cilium --field-selector spec.nodeName=controlplane -o name)
+kubectl -n kube-system exec $POD -c cilium-agent -- cilium-dbg bpf egress list
 ```
 
 ## Hints

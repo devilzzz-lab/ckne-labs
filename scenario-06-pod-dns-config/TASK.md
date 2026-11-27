@@ -1,6 +1,6 @@
 # Scenario 06 – Fix a Pod that cannot resolve cluster DNS
 
-**Domain 1 – Core Infrastructure and CNI** · Session: A or B · Time: ~6 min
+**Domain 1 – Core Infrastructure and CNI** · Session: Any playground · Time: ~6 min
 
 ## Context
 

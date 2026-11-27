@@ -1,6 +1,6 @@
 # Scenario 02 – IPAM and Pod CIDR investigation
 
-**Domain 1 – Core Infrastructure and CNI** · Session: **B (Cilium)** · Time: ~6 min
+**Domain 1 – Core Infrastructure and CNI** · Session: **Cilium playground** (do lab 01 first) · Time: ~6 min
 
 ## Context
 

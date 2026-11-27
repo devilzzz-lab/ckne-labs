@@ -55,7 +55,7 @@ kubectl -n kube-system exec ds/cilium -- cilium-dbg status --verbose
 Change a running install, then **restart**, because agents only read config at start:
 
 ```bash
-cilium upgrade --reuse-values --set <key>=<value>
+cilium upgrade --version <running-version> --reuse-values --set <key>=<value>   # pin the version, see `cilium version`
 kubectl -n kube-system rollout restart ds/cilium deploy/cilium-operator
 ```
 

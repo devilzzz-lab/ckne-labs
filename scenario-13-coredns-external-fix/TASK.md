@@ -1,6 +1,6 @@
 # Scenario 13 – CoreDNS: fix external lookups
 
-**Domain 2 – Service Networking and DNS** · Session: A or B · Time: ~6 min
+**Domain 2 – Service Networking and DNS** · Session: Any playground · Time: ~6 min
 
 ## Context
 

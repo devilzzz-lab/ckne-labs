@@ -5,7 +5,7 @@ trap gw_forward_stop EXIT
 
 issuer_ok() { eq "$(kubectl get clusterissuer selfsigned -o jsonpath='{.status.conditions[?(@.type=="Ready")].status}')" True; }
 secret_name(){ eq "$(kubectl -n store get certificate store-cert -o jsonpath='{.spec.secretName}')" store-tls; }
-cert_ready(){ retry 15 3 bash -c "[ \"\$(kubectl -n store get certificate store-cert -o jsonpath='{.status.conditions[?(@.type==\"Ready\")].status}')\" = True ]"; }
+cert_ready(){ retry 40 3 bash -c "[ \"\$(kubectl -n store get certificate store-cert -o jsonpath='{.status.conditions[?(@.type==\"Ready\")].status}')\" = True ]"; }
 secret_ok() { eq "$(kubectl -n store get secret store-tls -o jsonpath='{.type}')" kubernetes.io/tls; }
 l_ref()     { eq "$(kubectl -n store get gateway store-gw -o jsonpath='{.spec.listeners[0].tls.certificateRefs[0].name}')" store-tls; }
 l_res()     { retry 10 3 bash -c "[ \"\$(kubectl -n store get gateway store-gw -o jsonpath='{.status.listeners[?(@.name==\"https\")].conditions[?(@.type==\"ResolvedRefs\")].status}')\" = True ]"; }

@@ -31,7 +31,7 @@ spec:
 EOF
 
 kubectl -n fqdn exec client -- curl -s -o /dev/null -w '%{http_code}\n' -m6 https://example.com           # 200
-kubectl -n fqdn exec client -- curl -s -o /dev/null -w '%{http_code}\n' -m6 https://www.wikipedia.org     # 000
+kubectl -n fqdn exec client -- curl -s -o /dev/null -w '%{http_code}\n' -m6 https://www.wikipedia.org     # 000 (connection fails)
 ```
 
 ## Why

@@ -1,6 +1,6 @@
 # Scenario 26 – Gateway HTTPS with a TLS Secret
 
-**Domain 4 – Network Security and Policy** · Session: A or B · Time: ~10 min
+**Domain 4 – Network Security and Policy** · Session: Any playground · Time: ~10 min
 
 ## Context
 

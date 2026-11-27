@@ -1,6 +1,6 @@
 # Scenario 12 – CoreDNS: forward a corporate domain
 
-**Domain 2 – Service Networking and DNS** · Session: A or B · Time: ~8 min
+**Domain 2 – Service Networking and DNS** · Session: Any playground · Time: ~8 min
 
 ## Context
 

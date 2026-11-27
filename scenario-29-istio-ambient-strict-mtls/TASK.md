@@ -1,6 +1,6 @@
 # Scenario 29 – Istio ambient: STRICT mTLS
 
-**Domain 4 – Network Security and Policy** · Session: **A (Calico, no Cilium bpf-masq)** · Time: ~12 min
+**Domain 4 – Network Security and Policy** · Session: **Istio playground** (no Cilium BPF masquerade) · Time: ~12 min
 
 ## Context
 

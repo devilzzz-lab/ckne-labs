@@ -1,6 +1,6 @@
 # Scenario 30 – Istio ambient: waypoint + L7 AuthorizationPolicy
 
-**Domain 4 – Network Security and Policy** · Session: **A (Calico, no Cilium bpf-masq)** · Time: ~15 min
+**Domain 4 – Network Security and Policy** · Session: **Istio playground** (no Cilium BPF masquerade) · Time: ~15 min
 
 ## Context
 

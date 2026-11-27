@@ -102,7 +102,7 @@ printf 'set tabstop=2 shiftwidth=2 expandtab\n' >> ~/.vimrc
 |------|-----------|
 | Wrong host | Check the prompt before every change |
 | Default-deny egress breaks DNS | Always allow UDP+TCP 53 to kube-dns |
-| Cilium setting changed but not applied | After `cilium upgrade`, `rollout restart ds/cilium` **and** `deploy/cilium-operator` |
+| Cilium setting changed but not applied | After `cilium upgrade --version <running> --reuse-values`, `rollout restart ds/cilium` **and** `deploy/cilium-operator` |
 | Hand-written EndpointSlice ignored | Missing `kubernetes.io/service-name` label, or port name mismatch |
 | `namespaceSelector` + `podSelector` as two list items (OR) instead of one (AND) | Read the YAML dashes |
 | L7 Istio rule written with `selector` | Use `targetRefs` + a waypoint |
@@ -113,15 +113,16 @@ printf 'set tabstop=2 shiftwidth=2 expandtab\n' >> ~/.vimrc
 
 ## 8. How to use these labs (Killercoda)
 
-Two playground sessions, because Istio ambient and Cilium's eBPF masquerading do not coexist:
+Istio ambient and Cilium's eBPF masquerading do not coexist, so every lab is tagged:
 
-| Session | CNI | Scenarios |
-|---------|-----|-----------|
-| **A** | default Calico | everything tagged `any` or `calico` (3-17, 20-22, 26-30, 32-34) |
-| **B** | Cilium (do lab 01 or `cluster/install-cilium.sh`) | tagged `cilium` (1, 2, 18, 19, 23, 24, 25, 31) and all `any` labs |
+| Tag | Labs | Needs |
+|-----|------|-------|
+| any playground | 3-17, 20, 22, 26-28, 32-34 | a fresh playground |
+| Cilium playground | 1, 2, 18, 19, 23, 24, 25, 31 | Cilium with KPR + BPF masquerade: do lab 01 (or `cluster/install-cilium.sh`) |
+| Istio playground | 21, 29, 30 | no Cilium BPF masquerade: a fresh playground (the setup adjusts a stock Cilium for you) |
 
-Suggested order: work through **Session A** first (it is the default playground), restart the
-playground, then do **Session B**. Use `[g]` in `./ckne.sh` to open the study note for the lab you are on.
+Suggested order: the Istio labs and the "any" labs on a fresh playground, then lab 01 and the Cilium labs.
+Restart the playground before going back to an Istio lab. Use `[g]` in `./ckne.sh` to open the study note.
 
 Study loop for each lab: read the domain note → run the lab → solve without the solution →
 `[c]` check → read the solution anyway (it has "why" notes) → redo it from scratch the next day.

@@ -1,6 +1,6 @@
 # Scenario 01 – Install Cilium as a kube-proxy replacement
 
-**Domain 1 – Core Infrastructure and CNI** · Session: **B (Cilium)** · Time: ~10 min
+**Domain 1 – Core Infrastructure and CNI** · Session: **Cilium playground** (do lab 01 first) · Time: ~10 min
 
 ## Context
 

@@ -1,6 +1,6 @@
 # Scenario 18 – Cilium BGP Control Plane
 
-**Domain 3 – Advanced Traffic Management** · Session: **B (Cilium)** · Time: ~15 min
+**Domain 3 – Advanced Traffic Management** · Session: **Cilium playground** (do lab 01 first) · Time: ~15 min
 
 ## Context
 

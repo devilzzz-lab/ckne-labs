@@ -1,6 +1,6 @@
 # Scenario 04 – Find and remove a rogue iptables rule
 
-**Domain 1 – Core Infrastructure and CNI** · Session: A or B · Time: ~6 min
+**Domain 1 – Core Infrastructure and CNI** · Session: Any playground · Time: ~6 min
 
 ## Context
 
@@ -23,7 +23,7 @@ window". node01 also carries other custom firewall rules that **must stay**.
 ## Test AFTER fix
 
 ```bash
-curl -m5 http://$(kubectl get node node01 -o jsonpath='{.status.addresses[0].address}'):9090
+curl -m5 http://$(kubectl get node node01 -o jsonpath='{.status.addresses[?(@.type=="InternalIP")].address}'):9090
 ssh node01 'iptables -S INPUT'
 ```
 

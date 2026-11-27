@@ -76,7 +76,7 @@ Pods without NAT) and **Service IPs** (LoadBalancer, ClusterIP, externalIPs).
 Enable, then **restart** so the CRDs appear:
 
 ```bash
-cilium upgrade --reuse-values --set bgpControlPlane.enabled=true
+cilium upgrade --version <running-version> --reuse-values --set bgpControlPlane.enabled=true
 kubectl -n kube-system rollout restart ds/cilium deploy/cilium-operator
 kubectl api-resources | grep -i ciliumbgp
 kubectl label node <node> bgp=enabled                       # only labelled nodes speak BGP
@@ -151,7 +151,8 @@ firewalls and partners can allow-list one address.
 ### Cilium Egress Gateway (lab 19)
 
 Prerequisites: `egressGateway.enabled=true`, `bpf.masquerade=true`, `kubeProxyReplacement=true`, then
-**restart agents and operator**.
+**restart agents and operator**. When you change values with `cilium upgrade`, pass `--version <running version>`
+so Cilium is not upgraded at the same time.
 
 ```yaml
 apiVersion: cilium.io/v2

@@ -1,6 +1,6 @@
 # Scenario 17 – Inference Gateway: InferencePool routing
 
-**Domain 3 – Advanced Traffic Management** · Session: A or B · Time: ~10 min
+**Domain 3 – Advanced Traffic Management** · Session: Any playground · Time: ~10 min
 
 ## Context
 
@@ -28,7 +28,8 @@ Namespace `inference` already has:
    Service **`llama-epp`** on port **9002**.
 2. Create an **HTTPRoute** named **`llm-route`** attached to Gateway `inference-gw` that
    sends **`POST`** requests with path prefix **`/v1/completions`** to the InferencePool
-   `llama-pool` (the pool is the `backendRef`, not a Service).
+   `llama-pool` (the pool is the `backendRef`, not a Service). The backendRef must name
+   `group: inference.networking.k8s.io`, `kind: InferencePool` and `name: llama-pool`.
 
 ## Test AFTER fix
 

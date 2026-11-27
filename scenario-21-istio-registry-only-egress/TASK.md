@@ -1,6 +1,6 @@
 # Scenario 21 – Istio: registry-only egress control
 
-**Domain 3 – Advanced Traffic Management** · Session: **A (Calico)** · Time: ~12 min
+**Domain 3 – Advanced Traffic Management** · Session: **Istio playground** (no Cilium BPF masquerade) · Time: ~12 min
 
 ## Context
 

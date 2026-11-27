@@ -130,7 +130,7 @@ same node are not encrypted (it never leaves the host).
 
 ```bash
 cilium install --set encryption.enabled=true --set encryption.type=wireguard
-cilium upgrade --reuse-values --set encryption.enabled=true --set encryption.type=wireguard \
+cilium upgrade --version <running-version> --reuse-values --set encryption.enabled=true --set encryption.type=wireguard \
                               --set encryption.nodeEncryption=true          # also node-to-node
 kubectl -n kube-system rollout restart ds/cilium
 ```

@@ -10,9 +10,9 @@ PROGRESS_FILE="$SCRIPT_DIR/.ckne-progress"
 RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'; BLUE='\033[0;34m'
 CYAN='\033[0;36m'; BOLD='\033[1m'; DIM='\033[2m'; NC='\033[0m'
 
-# Session tags:  any    = works on both Calico (A) and Cilium (B)
-#                cilium = needs Cilium (session B)
-#                calico = needs a non-Cilium-bpf-masq cluster (session A) - Istio ambient
+# Playground tags:  any    = works on any playground
+#                   cilium = needs Cilium with KPR + BPF masquerade (lab 01 / cluster/install-cilium.sh)
+#                   calico = Istio ambient: needs a CNI without Cilium BPF masquerade
 SCENARIOS=(
   "scenario-01-cilium-install-kpr"
   "scenario-02-ipam-podcidr"
@@ -141,9 +141,9 @@ clear_screen() { printf '\033[2J\033[H'; }
 
 mode_label() {
   case "$1" in
-    cilium) echo -e "${CYAN}[B: Cilium]${NC}" ;;
-    calico) echo -e "${YELLOW}[A: Calico, Istio]${NC}" ;;
-    *)      echo -e "${DIM}[A or B]${NC}" ;;
+    cilium) echo -e "${CYAN}[Cilium playground]${NC}" ;;
+    calico) echo -e "${YELLOW}[Istio playground]${NC}" ;;
+    *)      echo -e "${DIM}[any playground]${NC}" ;;
   esac
 }
 
@@ -308,7 +308,7 @@ do_quit() {
 }
 
 list_scenarios() {
-  echo -e "\n  ${BOLD}All ${TOTAL} CKNE scenarios:${NC}   (A = Calico session, B = Cilium session)\n"
+  echo -e "\n  ${BOLD}All ${TOTAL} CKNE scenarios:${NC}   (Cilium = do lab 01 first · Istio = no Cilium BPF masquerade)\n"
   local d=0
   for i in "${!SCENARIOS[@]}"; do
     if [ "${SCENARIO_DOMAINS[$i]}" != "$d" ]; then

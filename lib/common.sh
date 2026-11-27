@@ -55,10 +55,36 @@ require_cilium() {
   kubectl -n kube-system rollout status ds/cilium --timeout=180s >/dev/null 2>&1 || die "Cilium DaemonSet is not ready yet."
   ensure_cilium_cli
 }
-# Istio ambient and Cilium bpf.masquerade=true do not work together.
+# Version of the running Cilium agent (e.g. 1.20.5).
+cilium_running_version() {
+  kubectl -n kube-system get ds cilium -o jsonpath='{.spec.template.spec.containers[0].image}' 2>/dev/null \
+    | sed -E 's/.*:v?([0-9]+\.[0-9]+\.[0-9]+).*/\1/'
+}
+# Change Cilium Helm values WITHOUT changing the Cilium version, then restart so the agents read them.
+# (`cilium upgrade` without --version moves to the CLI's default version.)
+cilium_set() {
+  ensure_cilium_cli
+  local v; v=$(cilium_running_version)
+  cilium upgrade --version "$v" --reuse-values "$@" || return 1
+  kubectl -n kube-system rollout restart ds/cilium deploy/cilium-operator >/dev/null
+  kubectl -n kube-system rollout status ds/cilium --timeout=300s >/dev/null
+}
+# Istio ambient on Cilium needs cni.exclusive=false (else Cilium removes the istio-cni config) and,
+# with kube-proxy replacement, socketLB.hostNamespaceOnly=true. It does NOT work with bpf.masquerade=true.
+# Docs: https://docs.cilium.io/en/stable/network/servicemesh/istio/
 require_no_bpf_masq() {
-  if [ "$(cni_kind)" = cilium ] && [ "$(cilium_cfg enable-bpf-masquerade)" = "true" ]; then
-    die "Istio ambient does not work with Cilium bpf.masquerade=true. Restart the Killercoda playground (Calico) for this scenario."
+  [ "$(cni_kind)" = cilium ] || return 0
+  if [ "$(cilium_cfg enable-bpf-masquerade)" = "true" ]; then
+    die "Istio ambient does not work with Cilium bpf.masquerade=true (you did lab 01 / install-cilium.sh). Restart the Killercoda playground for this scenario."
+  fi
+  local args=()
+  [ "$(cilium_cfg cni-exclusive)" = false ] || args+=(--set cni.exclusive=false)
+  if [ "$(cilium_cfg kube-proxy-replacement)" = true ] && [ "$(cilium_cfg bpf-lb-sock-hostns-only)" != true ]; then
+    args+=(--set socketLB.hostNamespaceOnly=true)
+  fi
+  if [ ${#args[@]} -gt 0 ]; then
+    log "Preparing Cilium for Istio ambient: ${args[*]}"
+    cilium_set "${args[@]}" || die "Could not change Cilium settings. Run by hand: cilium upgrade --version $(cilium_running_version) --reuse-values ${args[*]}"
   fi
 }
 

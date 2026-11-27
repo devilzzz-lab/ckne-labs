@@ -1,6 +1,6 @@
 # Scenario 20 – Cluster Mesh: repair the configuration
 
-**Domain 3 – Advanced Traffic Management** · Session: A or B · Time: ~12 min
+**Domain 3 – Advanced Traffic Management** · Session: Any playground · Time: ~12 min
 
 ## Context
 
@@ -22,12 +22,14 @@ The symptoms from the engineers: *"identities collide"*, *"remote nodes are 0"*,
 
 1. **Fix `c2-values.yaml`** so the two clusters can be meshed: unique cluster name and
    id (c2 must use name **`c2`** and id **`2`**), a pod CIDR that does **not overlap** c1
-   (**`10.2.0.0/16`**), and the clustermesh-apiserver enabled.
+   (**`10.2.0.0/16`**, and `10.1.0.0/16` must not appear anywhere in the file), and the
+   clustermesh-apiserver enabled (`clustermesh.useAPIServer: true`). Leave `c1-values.yaml` as it is.
 2. **Fix `global-service.yaml`** so that Cilium treats `backend` as a **global service**,
    then **apply** it to this cluster (`kubectl apply -f`).
 3. Write the **one command** that copies the Cilium CA from cluster c1 to cluster c2
    (Secret `cilium-ca` in `kube-system`; contexts are `kind-c1` and `kind-c2`) into
-   `/opt/answers/ca-copy.txt`.
+   `/opt/answers/ca-copy.txt`. It must read the Secret from `kind-c1` (`kubectl ... get secret ...`)
+   and create it in `kind-c2`.
 
 ## Test AFTER fix
 

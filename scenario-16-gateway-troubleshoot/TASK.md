@@ -1,6 +1,6 @@
 # Scenario 16 – Gateway API: fix a broken route
 
-**Domain 2 – Service Networking and DNS** · Session: A or B · Time: ~10 min
+**Domain 2 – Service Networking and DNS** · Session: Any playground · Time: ~10 min
 
 ## Context
 

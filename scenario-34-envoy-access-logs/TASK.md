@@ -1,6 +1,6 @@
 # Scenario 34 – Envoy access logs: who is hitting /api/login?
 
-**Domain 5 – Observability** · Session: A or B · Time: ~10 min
+**Domain 5 – Observability** · Session: Any playground · Time: ~10 min
 
 ## Context
 

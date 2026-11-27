@@ -1,6 +1,6 @@
 # Scenario 33 – Jaeger: find the slow hop and the error
 
-**Domain 5 – Observability** · Session: A or B · Time: ~10 min
+**Domain 5 – Observability** · Session: Any playground · Time: ~10 min
 
 ## Context
 
@@ -25,8 +25,8 @@ kubectl -n tracing port-forward svc/jaeger 16686:16686      # then open http://l
 ## Task
 
 1. In the Jaeger UI, find which **service adds the latency**: open slow traces, sort by
-   longest, and look at the span timeline (a long span with **short children**, or a long
-   span at the end of the chain). Write the **service name** into
+   longest, and compare each span with its child. The slow service is the one whose **own
+   time** (its duration minus its child's duration) is large. Write the **service name** into
    `/opt/answers/slow-service.txt`.
 2. Find the service whose spans carry **`error=true`** (use the Tags filter
    `error=true`). Write its **service name** into `/opt/answers/error-service.txt`.
